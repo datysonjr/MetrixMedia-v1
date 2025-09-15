@@ -9,7 +9,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { SiTiktok } from "react-icons/si";
 
 const contactFormSchema = z.object({
@@ -38,10 +37,15 @@ export default function Contact() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
+      // Simulate API call for now
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('Contact form submission:', data);
+          resolve({ ok: true, message: "Thank you for your message! We'll get back to you soon." });
+        }, 1000);
+      });
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       if (data.ok) {
         toast({
           title: "Message sent!",
