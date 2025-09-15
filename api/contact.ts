@@ -1,101 +1,52 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { z } from 'zod';
+import { MailService } from '@sendgrid/mail';
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  company?: string;
-  message: string;
-  website?: string; // honeypot field
-}
+const bodySchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  company: z.string().optional(),
+  message: z.string().min(5),
+  website: z.string().optional() // honeypot
+});
 
-// Simple validation function
-function validateContactForm(data: any): data is ContactFormData {
-  return (
-    data &&
-    typeof data.name === 'string' &&
-    data.name.trim().length > 0 &&
-    typeof data.email === 'string' &&
-    data.email.includes('@') &&
-    typeof data.message === 'string' &&
-    data.message.trim().length >= 5
-  );
-}
+const mail = new MailService();
+if (process.env.SENDGRID_API_KEY) mail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Rate limiting storage (in-memory for serverless)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const RATE_LIMIT_MAX_REQUESTS = 5;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const rateLimitData = rateLimitMap.get(ip);
-
-  if (!rateLimitData || now > rateLimitData.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return true;
-  }
-
-  if (rateLimitData.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false;
-  }
-
-  rateLimitData.count++;
-  return true;
-}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ ok: false, message: 'Method not allowed' });
+  if (req.method !== 'POST') return res.status(405).json({ ok: false, message: 'Method not allowed' });
+
+  // Safe JSON parsing for req.body
+  let body = req.body;
+  if (typeof req.body === 'string') {
+    try {
+      body = JSON.parse(req.body);
+    } catch {
+      return res.status(400).json({ ok: false, message: 'Invalid JSON' });
+    }
   }
 
-  try {
-    // Rate limiting
-    const clientIp = req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'unknown';
-    const ip = Array.isArray(clientIp) ? clientIp[0] : clientIp;
-    
-    if (!checkRateLimit(ip)) {
-      return res.status(429).json({ 
-        ok: false, 
-        message: "Too many requests. Please try again later." 
+  const parsed = bodySchema.safeParse(body);
+  if (!parsed.success) return res.status(400).json({ ok: false, message: 'Invalid form data', errors: parsed.error.errors });
+
+  const { name, email, company, message, website } = parsed.data;
+  if (website && website.trim() !== '') return res.status(200).json({ ok: true }); // bot trap
+
+  // Send email if SendGrid is configured
+  if (process.env.SENDGRID_API_KEY) {
+    try {
+      await mail.send({
+        to: process.env.CONTACT_TO_EMAIL || 'hello@metrixmedia.com',
+        from: process.env.CONTACT_FROM_EMAIL || 'noreply@metrixmedia.com',
+        subject: `New Contact Form Submission from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || 'N/A'}\n\n${message}`
       });
+    } catch (e) { 
+      console.error('SendGrid error:', e);
+      // Continue even if email fails
     }
-
-    // Validate request body
-    if (!validateContactForm(req.body)) {
-      return res.status(400).json({ 
-        ok: false, 
-        message: "Invalid form data. Please check all required fields." 
-      });
-    }
-
-    const { name, email, company, message, website } = req.body;
-
-    // Honeypot check - if website field is filled, it's likely spam
-    if (website && website.trim() !== '') {
-      return res.status(200).json({ ok: true, message: "Thank you for your message!" });
-    }
-
-    // Log the contact form submission (replace with actual email/database logic)
-    console.log('Contact form submission:', {
-      name,
-      email,
-      company: company || 'Not provided',
-      message,
-      timestamp: new Date().toISOString()
-    });
-
-    // Simulate successful submission
-    res.json({ 
-      ok: true, 
-      message: "Thank you for your message! We'll get back to you soon." 
-    });
-
-  } catch (error) {
-    console.error('Contact form error:', error);
-    res.status(500).json({ 
-      ok: false, 
-      message: "Internal server error. Please try again later." 
-    });
   }
+
+  return res.json({ ok: true, message: "Thank you for your message! We'll get back to you soon." });
 }
