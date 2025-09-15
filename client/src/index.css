@@ -132,13 +132,13 @@
 }
 
 .hero-logo {
-  width: 24rem; /* 384px = 96*4 */
-  height: 24rem;
+  width: 20rem; /* 320px - reduced by ~17% */
+  height: 20rem;
 }
 
 @media (min-width: 768px) {
   .hero-logo {
-    width: 32rem; /* 512px = 128*4 */
-    height: 32rem;
+    width: 27rem; /* 432px - reduced by ~16% */
+    height: 27rem;
   }
 }
