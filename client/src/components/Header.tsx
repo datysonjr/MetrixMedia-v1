@@ -28,7 +28,7 @@ export default function Header() {
               alt="Metrix Media Logo" 
               className="w-7 h-7 object-contain"
             />
-            <span className="text-2xl font-bold text-blue-600">Metrix Media</span>
+            <span className="text-2xl font-bold text-cyan-400">Metrix Media</span>
           </div>
           
           {/* Desktop Navigation */}

@@ -26,7 +26,7 @@ export default function Footer() {
                 alt="Metrix Media Logo" 
                 className="w-8 h-8 object-contain"
               />
-              <span className="text-2xl font-bold text-blue-600">Metrix Media</span>
+              <span className="text-2xl font-bold text-cyan-400">Metrix Media</span>
             </div>
             <p className="text-muted-foreground mb-6 max-w-md" data-testid="footer-description">
               Digital marketing agency specializing in viral content, meme marketing, and data-driven campaigns that deliver real results.
