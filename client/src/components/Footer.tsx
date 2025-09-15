@@ -20,13 +20,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-3 mb-6" data-testid="footer-logo">
+            <div className="flex items-center space-x-4 mb-6" data-testid="footer-logo">
               <img 
                 src="/metrix-logo.png" 
                 alt="Metrix Media Logo" 
-                className="w-10 h-10 object-contain"
+                className="w-16 h-16 object-contain"
               />
-              <span className="text-xl font-bold text-foreground">Metrix Media</span>
+              <span className="text-2xl font-bold text-foreground">Metrix Media</span>
             </div>
             <p className="text-muted-foreground mb-6 max-w-md" data-testid="footer-description">
               Digital marketing agency specializing in viral content, meme marketing, and data-driven campaigns that deliver real results.
