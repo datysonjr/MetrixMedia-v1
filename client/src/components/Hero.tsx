@@ -119,8 +119,18 @@ export default function Hero() {
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
+          {/* Hero Logo */}
+          <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <img 
+              src="/metrix-logo.png" 
+              alt="Metrix Media Logo" 
+              className="w-24 h-24 md:w-32 md:h-32 object-contain mx-auto animate-pulse"
+              data-testid="hero-logo"
+            />
+          </div>
+          
           {/* Animated Title */}
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h1 className="text-5xl md:text-7xl font-bold mb-8" data-testid="hero-title">
               <span className="inline-block">
                 {displayedText}
