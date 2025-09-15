@@ -1,0 +1,43 @@
+[15:57:34.698] Running build in Washington, D.C., USA (East) – iad1
+[15:57:34.699] Build machine configuration: 2 cores, 8 GB
+[15:57:34.731] Cloning github.com/datysonjr/MetrixConnect (Branch: main, Commit: d84cdcf)
+[15:57:34.745] Skipping build cache, deployment was triggered without cache.
+[15:57:35.549] Cloning completed: 818.000ms
+[15:57:35.906] Running "vercel build"
+[15:57:36.326] Vercel CLI 47.1.1
+[15:57:36.993] Installing dependencies...
+[15:57:41.964] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[15:57:41.986] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[15:57:47.261] 
+[15:57:47.262] added 499 packages in 10s
+[15:57:47.263] 
+[15:57:47.263] 65 packages are looking for funding
+[15:57:47.264]   run `npm fund` for details
+[15:57:47.337] Running "npm run build"
+[15:57:47.516] 
+[15:57:47.516] > rest-express@1.0.0 build
+[15:57:47.517] > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+[15:57:47.518] 
+[15:57:47.786] [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+[15:57:47.843] transforming...
+[15:57:48.134] Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+[15:57:48.136]   npx update-browserslist-db@latest
+[15:57:48.136]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[15:57:52.643] [32m✓[39m 1693 modules transformed.
+[15:57:52.989] rendering chunks...
+[15:57:52.999] computing gzip size...
+[15:57:53.015] [2m../dist/public/[22m[32mindex.html                 [39m[1m[2m  3.68 kB[22m[1m[22m[2m │ gzip:   1.16 kB[22m
+[15:57:53.015] [2m../dist/public/[22m[2massets/[22m[35mindex-D2k3SRTq.css  [39m[1m[2m 66.08 kB[22m[1m[22m[2m │ gzip:  11.67 kB[22m
+[15:57:53.016] [2m../dist/public/[22m[2massets/[22m[36mindex-BidGCZXM.js   [39m[1m[2m390.99 kB[22m[1m[22m[2m │ gzip: 119.74 kB[22m
+[15:57:53.018] [32m✓ built in 5.21s[39m
+[15:57:53.057] 
+[15:57:53.057]   dist/index.js  15.0kb
+[15:57:53.057] 
+[15:57:53.058] ⚡ Done in 6ms
+[15:57:53.135] Build Completed in /vercel/output [16s]
+[15:57:53.233] Deploying outputs...
+[15:57:56.128] Deployment completed
+[15:57:56.955] Creating build cache...
+[15:58:10.869] Created build cache: 13.909s
+[15:58:10.870] Uploading build cache [86.40 MB]
+[15:58:12.338] Build cache uploaded: 1.472s

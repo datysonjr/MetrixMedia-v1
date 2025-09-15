@@ -37,13 +37,12 @@ export default function Contact() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
-      // Simulate API call for now
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log('Contact form submission:', data);
-          resolve({ ok: true, message: "Thank you for your message! We'll get back to you soon." });
-        }, 1000);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+      return response.json();
     },
     onSuccess: (data: any) => {
       if (data.ok) {
