@@ -24,7 +24,7 @@ export default function Footer() {
               <img 
                 src="/metrix-logo.png" 
                 alt="Metrix Media Logo" 
-                className="w-16 h-16 object-contain"
+                className="w-8 h-8 object-contain"
               />
               <span className="text-2xl font-bold text-foreground">Metrix Media</span>
             </div>
