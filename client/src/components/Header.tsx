@@ -26,7 +26,7 @@ export default function Header() {
             <img 
               src="/metrix-logo.png" 
               alt="Metrix Media Logo" 
-              className="w-14 h-14 object-contain"
+              className="w-7 h-7 object-contain"
             />
             <span className="text-2xl font-bold text-foreground">Metrix Media</span>
           </div>
