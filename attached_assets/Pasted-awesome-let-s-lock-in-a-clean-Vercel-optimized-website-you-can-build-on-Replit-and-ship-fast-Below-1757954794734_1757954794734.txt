@@ -1,0 +1,274 @@
+awesome—let’s lock in a clean, Vercel-optimized website you can build on Replit and ship fast. Below is a replit-facing, objective-based directive you can hand to yourself (or a dev) and follow end-to-end.
+
+￼
+
+Project goals (what “done” looks like)
+	•	Lightweight, minimal, fast site that matches the Metrix Media brief (Home, About, Services, Case Studies, Contact).
+	•	SEO-ready with clean metadata, sitemap/robots, and great Core Web Vitals.
+	•	Deploys on Vercel with preview environments and zero-config scaling.
+	•	Forms work (rate-limited, spam-protected) and send notifications.
+	•	Analytics wired (Vercel + your preferred GA/PL).
+	•	Simple content system so you can update copy/case studies without code changes (MDX or JSON).
+
+Tech stack (intentionally boring + battle-tested)
+	•	Next.js 14/15 (App Router) on Node 18+
+	•	TypeScript + ESLint + Prettier
+	•	Tailwind CSS (utility-first, fast)
+	•	MDX for “About/Services/Case Studies” content (or plain JSON if you prefer)
+	•	Vercel (Edge where it helps; Node serverless for the contact form)
+	•	Optional email provider: Resend or Nodemailer (via Vercel function)
+
+Repository structure (copy this)
+
+/app
+  /(site)
+    /about/page.mdx
+    /services/page.mdx
+    /case-studies/page.tsx
+    /contact/page.tsx
+    /page.tsx                 # Home
+    layout.tsx
+    globals.css
+  /api
+    /contact/route.ts         # POST handler for contact form
+/components
+  Header.tsx
+  Footer.tsx
+  Container.tsx
+  Section.tsx
+  CTA.tsx
+  CaseCard.tsx
+/content
+  /case-studies/*.mdx         # each case study (or JSON)
+/lib
+  analytics.ts
+  seo.ts
+  rate-limit.ts
+  mailer.ts
+/public
+  /images/*                   # logos, social previews
+  favicon.ico
+styles/
+  tailwind.css
+next.config.ts
+package.json
+tsconfig.json
+.eslintrc.cjs
+.prettierrc
+README.md
+
+Page requirements (map to the brief)
+	•	Home: tagline, reach stats, strong CTA (Contact).
+	•	About: Nick’s story + mission.
+	•	Services: meme marketing, campaigns, paid ads, content creation (clear packages or bullets).
+	•	Case Studies: grid of wins (or “coming soon” placeholders now).
+	•	Contact: form (name/email/company/message), links, socials.
+(These match the website scope described in the outline.)  ￼
+
+Performance + UX guardrails
+	•	Images: use next/image with fill/sizes + priority only for above-the-fold hero; export SVG for logos.
+	•	Fonts: use next/font (self-hosted or Google) to avoid layout shift.
+	•	Code-splitting: dynamic import heavy/rare components.
+	•	Edge where sensible: static routes use ISR (revalidate), API runs as serverless Node (not Edge) if you need Node libs.
+	•	Caching: static assets via Vercel immutable caching; add revalidate: 3600 to content pages.
+	•	Accessibility: semantic headings, focus states, alt text, color contrast.
+
+SEO + sharing
+	•	Use Next’s Metadata API per page (title/description/OG).
+	•	Add /sitemap.xml and /robots.txt via next-sitemap or simple route handlers.
+	•	Generate a static OG image in /public/images/og.png.
+	•	Canonical URL in metadata for each page.
+
+Contact form (secure, spam-aware)
+	•	POST /api/contact validates payload (Zod), rate-limits by IP (KV or in-memory fallback), checks a hidden honeypot field.
+	•	Sends email via Resend (recommended) or Nodemailer (SES/Gmail).
+	•	Responds JSON { ok: true }.
+	•	On the client, disable submit while pending and show success/error.
+
+Analytics & monitoring
+	•	Vercel Web Analytics (toggle on) + optional GA4.
+	•	Add a tiny /lib/analytics.ts client helper to fire page views if using GA.
+	•	Consider PostHog or Plausible if you want lightweight eventing.
+
+Security & headers
+	•	Add a CSP (nonce-based for inline styles if needed), X-Frame-Options: DENY, Referrer-Policy: strict-origin-when-cross-origin, Permissions-Policy minimal.
+	•	Configure in next.config.ts headers() export.
+
+Step-by-step: build on Replit → GitHub → Vercel
+
+1) Initialize on Replit
+	1.	Create a new Node.js Repl, then:
+
+npx create-next-app@latest metrix-media --ts --eslint --tailwind --app --src-dir=false --import-alias "@/*"
+
+
+	2.	Move generated files to project root (if needed).
+	3.	Install extras:
+
+npm i zod nodemailer resend next-sitemap gray-matter @mdx-js/react remark-gfm
+
+
+	4.	Add scripts in package.json:
+
+{
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "sitemap": "next-sitemap"
+  }
+}
+
+
+	5.	Create Tailwind base (styles/tailwind.css) and import it in app/globals.css.
+
+2) Content wiring (fast authoring)
+	•	Use MDX for About/Services and each Case Study.
+	•	In next.config.ts, enable MDX:
+
+import createMDX from '@next/mdx';
+const withMDX = createMDX({ options: { remarkPlugins: [] }});
+/** @type {import('next').NextConfig} */
+const nextConfig = { pageExtensions: ['ts','tsx','mdx'] };
+export default withMDX(nextConfig);
+
+
+	•	Add simple MDX files: app/about/page.mdx, etc.
+
+3) Contact API
+	•	app/api/contact/route.ts:
+	•	Parse JSON, validate with Zod.
+	•	Rate-limit per IP (simple in-memory map or Vercel KV if you add it later).
+	•	Send email via Resend (needs RESEND_API_KEY), or Nodemailer.
+
+4) SEO plumbing
+	•	app/sitemap.ts route exporting URLs with lastModified.
+	•	app/robots.txt/route.ts returning text.
+	•	Use generateMetadata() on each page.
+
+5) Commit & push to GitHub
+	•	In Replit shell:
+
+git init
+git add .
+git commit -m "feat: initial Next.js site"
+git branch -M main
+git remote add origin <your_github_repo_url>
+git push -u origin main
+
+
+
+6) Vercel setup
+	1.	Import GitHub repo into Vercel (Framework auto-detect: Next.js).
+	2.	Environment vars (Project → Settings → Environment Variables):
+	•	NEXT_PUBLIC_SITE_URL = https://yourdomain.com
+	•	RESEND_API_KEY (if using Resend)
+	•	CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL
+	3.	Build settings: default (npm run build). Output: Next.js.
+	4.	Turn on Analytics and Speed Insights in Vercel.
+	5.	Connect your domain (CNAME root/apex as needed).
+	6.	Test a preview deployment (create a PR on GitHub).
+
+7) Edge caching & ISR
+	•	For MDX pages: export export const revalidate = 3600;
+	•	For Case Studies index: fetch MDX frontmatter and set revalidate.
+	•	Avoid forcing dynamic rendering unless necessary.
+
+next.config.ts essentials (copy)
+
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [], // add if you load external images
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' }
+        ],
+      },
+    ];
+  },
+};
+export default nextConfig;
+
+Contact API sketch (serverless)
+
+// app/api/contact/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { Resend } from 'resend';
+
+const schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  company: z.string().optional(),
+  message: z.string().min(5),
+  website: z.string().optional() // honeypot: leave empty
+});
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+export async function POST(req: NextRequest) {
+  const data = await req.json().catch(() => null);
+  const parsed = schema.safeParse(data);
+  if (!parsed.success) return NextResponse.json({ ok: false }, { status: 400 });
+
+  const { name, email, company, message, website } = parsed.data;
+  if (website) return NextResponse.json({ ok: true }); // bot caught
+
+  // TODO: add real rate limit (e.g., Vercel KV)
+  if (!resend) return NextResponse.json({ ok: false }, { status: 500 });
+
+  await resend.emails.send({
+    from: process.env.CONTACT_FROM_EMAIL!,
+    to: process.env.CONTACT_TO_EMAIL!,
+    subject: `New inquiry from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\nCompany: ${company ?? '-'}\n\n${message}`
+  });
+
+  return NextResponse.json({ ok: true });
+}
+
+Tailwind starter (keep it crisp)
+	•	Global container:
+
+// components/Container.tsx
+export default function Container({ children }: { children: React.ReactNode }) {
+  return <div className="mx-auto max-w-6xl px-4">{children}</div>;
+}
+
+	•	Use a 12–16pt base, generous line-height, and 64–96px vertical section rhythm.
+
+CI/CD & workflow
+	•	Every PR → Vercel preview URL auto-posted to GitHub checks.
+	•	Main branch → production deploy.
+	•	Protect main with required status checks.
+	•	Add npm run lint as a GitHub Action if desired.
+
+QA pre-launch checklist
+	•	Lighthouse ≥ 90 on Perf/SEO/Best Practices/Accessibility (mobile).
+	•	OG/Twitter cards render correctly.
+	•	404 page exists and is styled.
+	•	Contact form success + failure paths tested (and emails received).
+	•	Favicon/touch icons in place.
+	•	Sitemap/robots accessible.
+	•	All external links rel="noopener noreferrer".
+
+Post-launch
+	•	Turn on Speed Insights and watch Web Vitals.
+	•	Add simple A/B-test hooks (feature flags) later if needed.
+	•	Document how to add a new case study (drop an MDX file, push, done).
+
+⸻
+
+If you want, I can spin up a ready-to-paste README.md for the repo and/or stub the MDX pages with your initial copy.
