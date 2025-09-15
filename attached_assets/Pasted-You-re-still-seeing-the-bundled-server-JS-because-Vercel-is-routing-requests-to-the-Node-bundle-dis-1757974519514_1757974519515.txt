@@ -1,0 +1,127 @@
+You’re still seeing the bundled server JS because Vercel is routing requests to the Node bundle (dist/index.js) instead of your client build (dist/public/index.html). The code blob you pasted is exactly what a bundled Node/ESM file looks like.
+
+There are two clean ways to fix it. Pick A (pure static) unless you truly need a server.
+
+⸻
+
+A) Pure static deploy (recommended)
+
+Goal: Vercel serves dist/public/index.html and ignores your Express bundle.
+	1.	Stop building the server on Vercel
+
+	•	In package.json change:
+
+{
+  "scripts": {
+    "build": "vite build"
+  }
+}
+
+(Remove the esbuild server/index.ts ... part.)
+
+	2.	Point Vercel at the client output
+
+	•	Commit a vercel.json at the repo root:
+
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+
+	•	outputDirectory tells Vercel where your static site lives.
+	•	The last route gives SPA fallback (React Router).
+	•	Keep /api/* free if you later add Vercel Functions.
+
+	3.	Project Settings → Build & Output
+
+	•	Build Command: npm run build
+	•	Output Directory: dist/public
+	•	Framework Preset: Vite (or “Other” is fine)
+
+	4.	Verify your build actually creates dist/public/index.html
+
+	•	Locally or in CI logs, you should see dist/public/index.html and dist/public/assets/....
+
+	5.	Deploy again
+
+	•	With the server bundle no longer produced (step 1), Vercel won’t try to serve it.
+
+⸻
+
+B) Keep an API, but use Vercel Functions (no Express)
+
+If you need /api/contact, move it to a serverless function and still deploy the client statically.
+	1.	Create api/contact.ts:
+
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { z } from 'zod';
+import { MailService } from '@sendgrid/mail';
+
+const schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  company: z.string().optional(),
+  message: z.string().min(5),
+  website: z.string().optional() // honeypot
+});
+
+const mail = new MailService();
+if (process.env.SENDGRID_API_KEY) mail.setApiKey(process.env.SENDGRID_API_KEY!);
+
+export default async (req: VercelRequest, res: VercelResponse) => {
+  if (req.method !== 'POST') return res.status(405).json({ ok: false, message: 'Method not allowed' });
+
+  const parsed = schema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ ok: false, message: 'Invalid form data', errors: parsed.error.errors });
+
+  const { name, email, company, message, website } = parsed.data;
+  if (website && website.trim() !== '') return res.json({ ok: true }); // bot trap
+
+  // OPTIONAL: save to Neon via drizzle-orm/neon-http here (works in serverless).
+  if (process.env.SENDGRID_API_KEY) {
+    try {
+      await mail.send({
+        to: process.env.CONTACT_TO_EMAIL || 'hello@metrixmedia.com',
+        from: process.env.CONTACT_FROM_EMAIL || 'noreply@metrixmedia.com',
+        subject: `New Contact Form Submission from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nCompany: ${company ?? 'N/A'}\n\n${message}`
+      });
+    } catch {}
+  }
+
+  return res.json({ ok: true, message: "Thank you for your message! We'll get back to you soon." });
+};
+
+	2.	package.json:
+
+{ "scripts": { "build": "vite build" } }
+
+	3.	vercel.json (same as in A):
+
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+
+
+⸻
+
+Why your current setup keeps breaking
+	•	Your build produces two outputs:
+	•	dist/public/* (client)
+	•	dist/index.js (Express server)
+	•	Vercel will happily deploy a Node output and then your catch-all route ends up hitting the server artifact instead of the static index. That’s why you see the var __defProp = Object.defineProperty; ... blob.
+
+Removing the server bundle from the build is the key. After that, Vercel can only see the static site and will serve index.html.
+
+⸻
+
+If you paste your current package.json and (actual committed) vercel.json, I’ll spot-check and give the exact diffs.
