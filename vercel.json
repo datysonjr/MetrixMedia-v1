@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "buildCommand": "vite build",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install",
+  "framework": null,
+  "functions": {
+    "api/contact.ts": {
+      "runtime": "@vercel/node"
+    },
+    "api/sitemap.ts": {
+      "runtime": "@vercel/node"
+    },
+    "api/robots.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/robots.txt", 
+      "destination": "/api/robots"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
