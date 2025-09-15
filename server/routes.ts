@@ -28,6 +28,40 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // SEO Routes
+  app.get("/sitemap.xml", (req: Request, res: Response) => {
+    const baseUrl = req.get('host')?.includes('localhost') ? 
+      `http://${req.get('host')}` : 
+      'https://metrixmedia.com';
+      
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${baseUrl}/</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`;
+
+    res.set('Content-Type', 'application/xml');
+    res.send(sitemap);
+  });
+
+  app.get("/robots.txt", (req: Request, res: Response) => {
+    const baseUrl = req.get('host')?.includes('localhost') ? 
+      `http://${req.get('host')}` : 
+      'https://metrixmedia.com';
+      
+    const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${baseUrl}/sitemap.xml`;
+
+    res.set('Content-Type', 'text/plain');
+    res.send(robots);
+  });
+
   app.post("/api/contact", async (req: Request, res: Response) => {
     try {
       // Rate limiting
