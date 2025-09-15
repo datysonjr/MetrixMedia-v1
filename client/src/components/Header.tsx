@@ -22,13 +22,13 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-4" data-testid="logo-metrix-media">
+          <div className="flex items-center space-x-3" data-testid="logo-metrix-media">
             <img 
               src="/metrix-logo.png" 
               alt="Metrix Media Logo" 
               className="w-7 h-7 object-contain"
             />
-            <span className="text-2xl font-bold text-foreground">Metrix Media</span>
+            <span className="text-2xl font-bold text-blue-600">Metrix Media</span>
           </div>
           
           {/* Desktop Navigation */}
