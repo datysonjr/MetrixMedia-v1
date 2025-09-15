@@ -130,15 +130,3 @@
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
-
-.hero-logo {
-  width: 20rem; /* 320px - reduced by ~17% */
-  height: 20rem;
-}
-
-@media (min-width: 768px) {
-  .hero-logo {
-    width: 27rem; /* 432px - reduced by ~16% */
-    height: 27rem;
-  }
-}
