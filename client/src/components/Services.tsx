@@ -1,4 +1,5 @@
 import { Smile, Megaphone, Target, Video, Check } from "lucide-react";
+import HorizontalScroller from "./HorizontalScroller";
 
 export default function Services() {
   const scrollToSection = (sectionId: string) => {
@@ -74,19 +75,48 @@ export default function Services() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Mobile horizontal scroll, Desktop grid */}
+        <HorizontalScroller
+          itemWidth="20rem"
+          className="md:hidden"
+          ariaLabel="Services list"
+          testId="services-scroller"
+        >
           {services.map((service, index) => (
-            <div key={index} className="bg-card p-8 rounded-2xl border border-border card-hover" data-testid={`service-card-${index}`}>
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+            <div key={index} className="bg-card p-6 rounded-2xl border border-border card-hover h-full" data-testid={`service-card-${index}`}>
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                 {service.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-4" data-testid={`service-title-${index}`}>{service.title}</h3>
-              <p className="text-muted-foreground mb-6" data-testid={`service-description-${index}`}>
+              <h3 className="text-lg font-semibold mb-3" data-testid={`service-title-${index}`}>{service.title}</h3>
+              <p className="text-muted-foreground mb-4 text-sm leading-relaxed" data-testid={`service-description-${index}`}>
                 {service.description}
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {service.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center" data-testid={`service-feature-${index}-${featureIndex}`}>
+                    <Check className="text-primary mr-2 flex-shrink-0" size={14} />
+                    <span className="leading-relaxed">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </HorizontalScroller>
+        
+        {/* Desktop grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="bg-card p-8 rounded-2xl border border-border card-hover" data-testid={`service-card-desktop-${index}`}>
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold mb-4" data-testid={`service-title-desktop-${index}`}>{service.title}</h3>
+              <p className="text-muted-foreground mb-6" data-testid={`service-description-desktop-${index}`}>
+                {service.description}
+              </p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {service.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center" data-testid={`service-feature-desktop-${index}-${featureIndex}`}>
                     <Check className="text-primary mr-2" size={16} />
                     {feature}
                   </li>
@@ -99,27 +129,75 @@ export default function Services() {
         {/* Service Packages */}
         <div className="mt-20">
           <h3 className="text-3xl font-bold text-center mb-12" data-testid="packages-title">Choose Your Package</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Mobile horizontal scroll, Desktop grid */}
+          <HorizontalScroller
+            itemWidth="18rem"
+            className="md:hidden"
+            ariaLabel="Service packages"
+            testId="packages-scroller"
+          >
+            {packages.map((pkg, index) => (
+              <div 
+                key={index} 
+                className={`bg-card p-6 rounded-2xl text-center relative h-full flex flex-col ${
+                  pkg.popular ? 'border-2 border-primary' : 'border border-border'
+                }`}
+                data-testid={`package-card-${index}`}
+              >
+                {pkg.popular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium" data-testid="package-popular-badge">
+                    Most Popular
+                  </div>
+                )}
+                <h4 className="text-xl font-bold mb-3 mt-2" data-testid={`package-name-${index}`}>{pkg.name}</h4>
+                <div className="text-3xl font-bold text-primary mb-4" data-testid={`package-price-${index}`}>
+                  {pkg.price}<span className="text-base text-muted-foreground">{pkg.period}</span>
+                </div>
+                <ul className="space-y-2 mb-6 text-left flex-grow">
+                  {pkg.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start" data-testid={`package-feature-${index}-${featureIndex}`}>
+                      <Check className="text-primary mr-2 flex-shrink-0 mt-0.5" size={14} />
+                      <span className="text-sm leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={() => scrollToSection('contact')} 
+                  className={`block w-full py-3 rounded-lg font-semibold transition-colors text-sm ${
+                    pkg.popular 
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                  }`}
+                  data-testid={`package-button-${index}`}
+                >
+                  {pkg.name === 'Enterprise' ? 'Contact Us' : 'Get Started'}
+                </button>
+              </div>
+            ))}
+          </HorizontalScroller>
+          
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8">
             {packages.map((pkg, index) => (
               <div 
                 key={index} 
                 className={`bg-card p-8 rounded-2xl text-center relative ${
                   pkg.popular ? 'border-2 border-primary' : 'border border-border'
                 }`}
-                data-testid={`package-card-${index}`}
+                data-testid={`package-card-desktop-${index}`}
               >
                 {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium" data-testid="package-popular-badge">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium" data-testid="package-popular-badge-desktop">
                     Most Popular
                   </div>
                 )}
-                <h4 className="text-2xl font-bold mb-4" data-testid={`package-name-${index}`}>{pkg.name}</h4>
-                <div className="text-4xl font-bold text-primary mb-6" data-testid={`package-price-${index}`}>
+                <h4 className="text-2xl font-bold mb-4" data-testid={`package-name-desktop-${index}`}>{pkg.name}</h4>
+                <div className="text-4xl font-bold text-primary mb-6" data-testid={`package-price-desktop-${index}`}>
                   {pkg.price}<span className="text-lg text-muted-foreground">{pkg.period}</span>
                 </div>
                 <ul className="space-y-3 mb-8 text-left">
                   {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center" data-testid={`package-feature-${index}-${featureIndex}`}>
+                    <li key={featureIndex} className="flex items-center" data-testid={`package-feature-desktop-${index}-${featureIndex}`}>
                       <Check className="text-primary mr-3" size={16} />
                       {feature}
                     </li>
@@ -132,7 +210,7 @@ export default function Services() {
                       ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
                       : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                   }`}
-                  data-testid={`package-button-${index}`}
+                  data-testid={`package-button-desktop-${index}`}
                 >
                   {pkg.name === 'Enterprise' ? 'Contact Us' : 'Get Started'}
                 </button>
