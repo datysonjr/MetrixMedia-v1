@@ -158,30 +158,30 @@ export default function Hero() {
             </p>
           </div>
           
-          {/* Animated Stats - Mobile-first with horizontal scroll */}
+          {/* Animated Stats - Mobile-first compact grid */}
           <div className={`mb-8 md:mb-12 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {/* Mobile: Horizontal scroll */}
-            <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory px-4 pb-2 md:hidden [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex-shrink-0 snap-start text-center group active:scale-95 transition-transform duration-200 min-w-[140px]" data-testid="stat-impressions">
-                <div className="text-3xl font-bold text-primary flex items-center justify-center gap-2">
-                  <TrendingUp className="w-5 h-5" />
-                  {Math.floor(impressions)}M+
+            {/* Mobile: Compact 3-column grid that fits on screen */}
+            <div className="grid grid-cols-3 gap-2 px-2 md:hidden">
+              <div className="text-center group active:scale-95 transition-transform duration-200" data-testid="stat-impressions">
+                <div className="text-xl sm:text-2xl font-bold text-primary flex flex-col items-center gap-1">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>{Math.floor(impressions)}M+</span>
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">Monthly Impressions</div>
+                <div className="text-xs text-muted-foreground mt-1 leading-tight">Monthly<br />Impressions</div>
               </div>
-              <div className="flex-shrink-0 snap-start text-center group active:scale-95 transition-transform duration-200 min-w-[140px]" data-testid="stat-roi">
-                <div className="text-3xl font-bold text-primary flex items-center justify-center gap-2">
-                  <span className="text-xl">📈</span>
-                  {Math.floor(roi)}%
+              <div className="text-center group active:scale-95 transition-transform duration-200" data-testid="stat-roi">
+                <div className="text-xl sm:text-2xl font-bold text-primary flex flex-col items-center gap-1">
+                  <span className="text-base">📈</span>
+                  <span>{Math.floor(roi)}%</span>
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">Average ROI Increase</div>
+                <div className="text-xs text-muted-foreground mt-1 leading-tight">Average ROI<br />Increase</div>
               </div>
-              <div className="flex-shrink-0 snap-start text-center group active:scale-95 transition-transform duration-200 min-w-[140px]" data-testid="stat-clients">
-                <div className="text-3xl font-bold text-primary flex items-center justify-center gap-2">
-                  <span className="text-xl">🎯</span>
-                  {Math.floor(clients)}+
+              <div className="text-center group active:scale-95 transition-transform duration-200" data-testid="stat-clients">
+                <div className="text-xl sm:text-2xl font-bold text-primary flex flex-col items-center gap-1">
+                  <span className="text-base">🎯</span>
+                  <span>{Math.floor(clients)}+</span>
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">Happy Clients</div>
+                <div className="text-xs text-muted-foreground mt-1 leading-tight">Happy<br />Clients</div>
               </div>
             </div>
             
