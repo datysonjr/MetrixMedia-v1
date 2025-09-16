@@ -106,7 +106,7 @@ export default function Header() {
           />
           
           {/* Menu Panel */}
-          <div className="fixed top-16 right-0 w-72 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-md border-l border-border md:hidden transition-transform duration-300 z-50 shadow-xl">
+          <div className="fixed top-16 right-0 w-72 h-[calc(100vh-4rem)] bg-background border-l border-border md:hidden transition-transform duration-300 z-50 shadow-xl">
             <nav className="p-6 space-y-1 overflow-y-auto h-full" role="navigation" aria-label="Mobile navigation">
               <button 
                 onClick={() => scrollToSection('home')} 
