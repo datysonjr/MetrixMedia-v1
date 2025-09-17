@@ -1,6 +1,9 @@
 import HorizontalScroller from "./HorizontalScroller";
+import { useLocation } from "wouter";
 
 export default function CaseStudies() {
+  const [, setLocation] = useLocation();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -13,18 +16,25 @@ export default function CaseStudies() {
     }
   };
 
+  const navigateToCaseStudy = (slug?: string) => {
+    if (slug) {
+      setLocation(`/case-study/${slug}`);
+    }
+  };
+
   const caseStudies = [
     {
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
-      alt: "E-commerce brand campaign results",
-      category: "E-commerce",
-      date: "Q4 2023",
-      title: "Fashion Brand Revival",
-      description: "Transformed a struggling fashion brand with viral TikTok content and targeted Instagram ads.",
+      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+      alt: "Pillow Fight Championship professional sports event",
+      category: "Sports & Entertainment",
+      date: "2022-2025",
+      title: "Pillow Fight Championship",
+      description: "Metrix Media took this brand from 0 to ESPN coverage, major sponsorships, and millions of followers across social platforms.",
       metrics: [
-        { value: "400%", label: "Revenue Increase" },
-        { value: "2.5M", label: "Video Views" }
-      ]
+        { value: "651K+", label: "Total Followers" },
+        { value: "50M+", label: "Video Views" }
+      ],
+      slug: "pfc"
     },
     {
       image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
@@ -36,7 +46,8 @@ export default function CaseStudies() {
       metrics: [
         { value: "4900%", label: "User Growth" },
         { value: "$120K", label: "MRR Added" }
-      ]
+      ],
+      slug: undefined
     },
     {
       image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400",
@@ -48,7 +59,8 @@ export default function CaseStudies() {
       metrics: [
         { value: "250%", label: "Foot Traffic" },
         { value: "1.8M", label: "Social Reach" }
-      ]
+      ],
+      slug: undefined
     }
   ];
 
@@ -100,7 +112,11 @@ export default function CaseStudies() {
                     </div>
                   ))}
                 </div>
-                <button className="text-primary font-medium hover:underline text-sm" data-testid={`case-study-link-${index}`}>
+                <button 
+                  onClick={() => navigateToCaseStudy(study.slug)}
+                  className="text-primary font-medium hover:underline text-sm" 
+                  data-testid={`case-study-link-${index}`}
+                >
                   Read Full Story →
                 </button>
               </div>
@@ -141,7 +157,11 @@ export default function CaseStudies() {
                     </div>
                   ))}
                 </div>
-                <button className="text-primary font-medium hover:underline" data-testid={`case-study-link-desktop-${index}`}>
+                <button 
+                  onClick={() => navigateToCaseStudy(study.slug)}
+                  className="text-primary font-medium hover:underline" 
+                  data-testid={`case-study-link-desktop-${index}`}
+                >
                   Read Full Story →
                 </button>
               </div>
