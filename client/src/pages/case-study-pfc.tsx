@@ -253,11 +253,11 @@ export default function PFCCaseStudy() {
             <div className="bg-primary/10 rounded-xl p-6 mb-8">
               <h3 className="text-lg font-semibold mb-3 text-foreground">What Made This Campaign Successful:</h3>
               <ul className="space-y-2 text-foreground">
-                <li>• <strong>Authentic storytelling</strong> that emphasized real athleticism and competition</li>
-                <li>• <strong>Platform-specific content</strong> optimized for each social media channel</li>
-                <li>• <strong>Consistent brand messaging</strong> positioning PFC as a legitimate sport</li>
-                <li>• <strong>Strategic partnerships</strong> with relevant brands and media outlets</li>
-                <li>• <strong>Community building</strong> that engaged fans and created viral moments</li>
+                <li>• <strong className="text-foreground">Authentic storytelling</strong> that emphasized real athleticism and competition</li>
+                <li>• <strong className="text-foreground">Platform-specific content</strong> optimized for each social media channel</li>
+                <li>• <strong className="text-foreground">Consistent brand messaging</strong> positioning PFC as a legitimate sport</li>
+                <li>• <strong className="text-foreground">Strategic partnerships</strong> with relevant brands and media outlets</li>
+                <li>• <strong className="text-foreground">Community building</strong> that engaged fans and created viral moments</li>
               </ul>
             </div>
           </div>
