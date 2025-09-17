@@ -1,6 +1,6 @@
 import HorizontalScroller from "./HorizontalScroller";
 import { useLocation } from "wouter";
-import pfcImage from "@assets/image_1758146789699.png";
+import pfcImage from "../assets/pfc-championship.png";
 
 export default function CaseStudies() {
   const [, setLocation] = useLocation();
