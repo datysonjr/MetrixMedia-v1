@@ -150,7 +150,7 @@ export default function PFCCaseStudy() {
             </p>
             
             <div className="bg-muted/30 rounded-xl p-6 mb-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
                 <TrendingUp className="w-5 h-5 text-primary" />
                 Phase 1: Content & Community Building
               </h3>
@@ -163,7 +163,7 @@ export default function PFCCaseStudy() {
             </div>
 
             <div className="bg-muted/30 rounded-xl p-6 mb-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
                 <Users className="w-5 h-5 text-primary" />
                 Phase 2: Audience Expansion & Engagement
               </h3>
@@ -176,7 +176,7 @@ export default function PFCCaseStudy() {
             </div>
 
             <div className="bg-muted/30 rounded-xl p-6 mb-8">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
                 <Award className="w-5 h-5 text-primary" />
                 Phase 3: Legitimization & Monetization
               </h3>
@@ -195,7 +195,7 @@ export default function PFCCaseStudy() {
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-primary/5 rounded-xl p-6">
-                <h4 className="font-semibold mb-3 flex items-center gap-2">
+                <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground">
                   <Eye className="w-5 h-5 text-primary" />
                   Social Media Growth
                 </h4>
@@ -220,7 +220,7 @@ export default function PFCCaseStudy() {
               </div>
 
               <div className="bg-primary/5 rounded-xl p-6">
-                <h4 className="font-semibold mb-3 flex items-center gap-2">
+                <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground">
                   <Award className="w-5 h-5 text-primary" />
                   Media & Partnerships
                 </h4>
@@ -251,7 +251,7 @@ export default function PFCCaseStudy() {
             </p>
 
             <div className="bg-primary/10 rounded-xl p-6 mb-8">
-              <h3 className="text-lg font-semibold mb-3">What Made This Campaign Successful:</h3>
+              <h3 className="text-lg font-semibold mb-3 text-foreground">What Made This Campaign Successful:</h3>
               <ul className="space-y-2 text-foreground">
                 <li>• <strong>Authentic storytelling</strong> that emphasized real athleticism and competition</li>
                 <li>• <strong>Platform-specific content</strong> optimized for each social media channel</li>
@@ -264,8 +264,8 @@ export default function PFCCaseStudy() {
 
           {/* Call to Action */}
           <div className="text-center pt-12 border-t border-border">
-            <h2 className="text-2xl font-bold mb-4">Ready to Build Your Brand?</h2>
-            <p className="text-muted-foreground mb-6">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">Ready to Build Your Brand?</h2>
+            <p className="text-foreground mb-6">
               See how Metrix Media can take your brand from zero to mainstream success.
             </p>
             <button 
@@ -282,7 +282,7 @@ export default function PFCCaseStudy() {
       {/* Footer */}
       <footer className="bg-muted py-8 mt-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-muted-foreground">
+          <p className="text-foreground">
             © 2024 Metrix Media. All rights reserved.
           </p>
         </div>
