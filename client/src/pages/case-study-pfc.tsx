@@ -1,7 +1,7 @@
 import { ArrowLeft, ExternalLink, Instagram, Youtube, Globe, TrendingUp, Users, Eye, Award } from "lucide-react";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import pfcImage from "@assets/image_1758146789699.png";
+import pfcImage from "../assets/pfc-championship.png";
 
 export default function PFCCaseStudy() {
   const [, setLocation] = useLocation();
