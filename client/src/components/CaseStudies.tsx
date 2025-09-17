@@ -24,8 +24,8 @@ export default function CaseStudies() {
 
   const caseStudies = [
     {
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-      alt: "Pillow Fight Championship professional sports event",
+      image: "@assets/image_1758146789699.png",
+      alt: "Professional pillow fighting action shot from PFC Championship event",
       category: "Sports & Entertainment",
       date: "2022-2025",
       title: "Pillow Fight Championship",
