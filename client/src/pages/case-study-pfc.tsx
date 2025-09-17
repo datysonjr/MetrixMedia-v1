@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink, Instagram, Youtube, Globe, TrendingUp, Users, Eye, Award } from "lucide-react";
 import { useLocation } from "wouter";
+import pfcImage from "@assets/image_1758146789699.png";
 
 export default function PFCCaseStudy() {
   const [, setLocation] = useLocation();
@@ -122,7 +123,7 @@ export default function PFCCaseStudy() {
           {/* Image */}
           <div className="mb-12 rounded-2xl overflow-hidden">
             <img 
-              src="@assets/image_1758146789699.png" 
+              src={pfcImage} 
               alt="Professional PFC pillow fighting action shot showing two competitors in the ring" 
               className="w-full h-64 md:h-96 object-cover"
               loading="lazy"
