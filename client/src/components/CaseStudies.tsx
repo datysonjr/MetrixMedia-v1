@@ -1,5 +1,6 @@
 import HorizontalScroller from "./HorizontalScroller";
 import { useLocation } from "wouter";
+import pfcImage from "@assets/image_1758146789699.png";
 
 export default function CaseStudies() {
   const [, setLocation] = useLocation();
@@ -24,7 +25,7 @@ export default function CaseStudies() {
 
   const caseStudies = [
     {
-      image: "@assets/image_1758146789699.png",
+      image: pfcImage,
       alt: "Professional pillow fighting action shot from PFC Championship event",
       category: "Sports & Entertainment",
       date: "2022-2025",
