@@ -122,8 +122,8 @@ export default function PFCCaseStudy() {
           {/* Image */}
           <div className="mb-12 rounded-2xl overflow-hidden">
             <img 
-              src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600" 
-              alt="Professional pillow fighting championship event" 
+              src="@assets/image_1758146789699.png" 
+              alt="Professional PFC pillow fighting action shot showing two competitors in the ring" 
               className="w-full h-64 md:h-96 object-cover"
               loading="lazy"
               data-testid="case-study-hero-image"
