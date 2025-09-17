@@ -1,9 +1,15 @@
 import { ArrowLeft, ExternalLink, Instagram, Youtube, Globe, TrendingUp, Users, Eye, Award } from "lucide-react";
 import { useLocation } from "wouter";
+import { useEffect } from "react";
 import pfcImage from "@assets/image_1758146789699.png";
 
 export default function PFCCaseStudy() {
   const [, setLocation] = useLocation();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     setLocation('/');
@@ -61,7 +67,7 @@ export default function PFCCaseStudy() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6" data-testid="case-study-title">
               Pillow Fight Championship
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-xl text-foreground mb-8 leading-relaxed">
               From Zero to ESPN: How Metrix Media Built the World's First Professional Pillow Fighting League
             </p>
             
@@ -69,19 +75,19 @@ export default function PFCCaseStudy() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
               <div className="text-center" data-testid="metric-followers">
                 <div className="text-3xl font-bold text-primary">651K+</div>
-                <div className="text-muted-foreground">Total Followers</div>
+                <div className="text-foreground">Total Followers</div>
               </div>
               <div className="text-center" data-testid="metric-views">
                 <div className="text-3xl font-bold text-primary">50M+</div>
-                <div className="text-muted-foreground">Video Views</div>
+                <div className="text-foreground">Video Views</div>
               </div>
               <div className="text-center" data-testid="metric-sponsors">
                 <div className="text-3xl font-bold text-primary">10+</div>
-                <div className="text-muted-foreground">Major Sponsors</div>
+                <div className="text-foreground">Major Sponsors</div>
               </div>
               <div className="text-center" data-testid="metric-media">
                 <div className="text-3xl font-bold text-primary">ESPN</div>
-                <div className="text-muted-foreground">TV Coverage</div>
+                <div className="text-foreground">TV Coverage</div>
               </div>
             </div>
 
@@ -133,13 +139,13 @@ export default function PFCCaseStudy() {
 
           {/* Story Content */}
           <div className="prose prose-lg max-w-none">
-            <h2 className="text-2xl font-bold mb-4">The Challenge</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">The Challenge</h2>
+            <p className="text-foreground mb-6 leading-relaxed">
               In early 2022, Pillow Fight Championship approached Metrix Media with an ambitious but seemingly impossible goal: take a quirky concept of professional pillow fighting and transform it into a legitimate, mainstream entertainment brand that could attract sponsors, media coverage, and millions of viewers worldwide.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">The Strategy</h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">The Strategy</h2>
+            <p className="text-foreground mb-4 leading-relaxed">
               Our team developed a comprehensive digital marketing strategy focused on viral content creation, strategic social media growth, and brand legitimization:
             </p>
             
@@ -148,7 +154,7 @@ export default function PFCCaseStudy() {
                 <TrendingUp className="w-5 h-5 text-primary" />
                 Phase 1: Content & Community Building
               </h3>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-foreground">
                 <li>• Created viral-ready content showcasing the athleticism and entertainment value</li>
                 <li>• Developed consistent brand messaging around "professional pillow fighting"</li>
                 <li>• Built engaged communities across TikTok, Instagram, and YouTube</li>
@@ -161,7 +167,7 @@ export default function PFCCaseStudy() {
                 <Users className="w-5 h-5 text-primary" />
                 Phase 2: Audience Expansion & Engagement
               </h3>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-foreground">
                 <li>• Grew Instagram following from 0 to 246K+ engaged followers</li>
                 <li>• Built TikTok presence to 405.4K followers with viral video content</li>
                 <li>• Established YouTube channel with 14K subscribers and millions of views</li>
@@ -174,7 +180,7 @@ export default function PFCCaseStudy() {
                 <Award className="w-5 h-5 text-primary" />
                 Phase 3: Legitimization & Monetization
               </h3>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-foreground">
                 <li>• Secured major brand partnerships with Manscaped, Harris Pillow, and others</li>
                 <li>• Achieved ESPN coverage and mainstream media recognition</li>
                 <li>• Generated features in Forbes, international media outlets</li>
@@ -182,8 +188,8 @@ export default function PFCCaseStudy() {
               </ul>
             </div>
 
-            <h2 className="text-2xl font-bold mb-4">The Results</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">The Results</h2>
+            <p className="text-foreground mb-6 leading-relaxed">
               The campaign exceeded all expectations, transforming PFC from a startup concept into a globally recognized entertainment brand with legitimate sports credibility.
             </p>
 
@@ -195,20 +201,20 @@ export default function PFCCaseStudy() {
                 </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Instagram</span>
-                    <span className="font-bold">246K followers</span>
+                    <span className="text-foreground">Instagram</span>
+                    <span className="font-bold text-foreground">246K followers</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">TikTok</span>
-                    <span className="font-bold">405.4K followers</span>
+                    <span className="text-foreground">TikTok</span>
+                    <span className="font-bold text-foreground">405.4K followers</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">YouTube</span>
-                    <span className="font-bold">14K subscribers</span>
+                    <span className="text-foreground">YouTube</span>
+                    <span className="font-bold text-foreground">14K subscribers</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Views</span>
-                    <span className="font-bold">50M+</span>
+                    <span className="text-foreground">Total Views</span>
+                    <span className="font-bold text-foreground">50M+</span>
                   </div>
                 </div>
               </div>
@@ -220,33 +226,33 @@ export default function PFCCaseStudy() {
                 </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">ESPN Coverage</span>
-                    <span className="font-bold">✓ Achieved</span>
+                    <span className="text-foreground">ESPN Coverage</span>
+                    <span className="font-bold text-foreground">✓ Achieved</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Forbes Feature</span>
-                    <span className="font-bold">✓ Achieved</span>
+                    <span className="text-foreground">Forbes Feature</span>
+                    <span className="font-bold text-foreground">✓ Achieved</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Major Sponsors</span>
-                    <span className="font-bold">10+</span>
+                    <span className="text-foreground">Major Sponsors</span>
+                    <span className="font-bold text-foreground">10+</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">International Coverage</span>
-                    <span className="font-bold">✓ Achieved</span>
+                    <span className="text-foreground">International Coverage</span>
+                    <span className="font-bold text-foreground">✓ Achieved</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold mb-4">Key Takeaways</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">Key Takeaways</h2>
+            <p className="text-foreground mb-6 leading-relaxed">
               The Pillow Fight Championship case study demonstrates how creative content strategy, consistent execution, and strategic brand positioning can transform even the most unconventional concepts into mainstream entertainment properties. By focusing on the athletic and entertaining aspects while maintaining professional presentation, we successfully bridged the gap between novelty and legitimacy.
             </p>
 
             <div className="bg-primary/10 rounded-xl p-6 mb-8">
               <h3 className="text-lg font-semibold mb-3">What Made This Campaign Successful:</h3>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-foreground">
                 <li>• <strong>Authentic storytelling</strong> that emphasized real athleticism and competition</li>
                 <li>• <strong>Platform-specific content</strong> optimized for each social media channel</li>
                 <li>• <strong>Consistent brand messaging</strong> positioning PFC as a legitimate sport</li>
