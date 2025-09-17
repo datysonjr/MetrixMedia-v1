@@ -17,7 +17,7 @@ export default function Footer() {
   return (
     <footer className="bg-muted py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-4 mb-6" data-testid="footer-logo">
@@ -110,33 +110,6 @@ export default function Footer() {
                   data-testid="footer-link-contact"
                 >
                   Contact
-                </button>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold mb-4" data-testid="footer-services-title">Services</h4>
-            <ul className="space-y-2">
-              <li>
-                <button className="text-muted-foreground hover:text-primary transition-colors" data-testid="footer-service-meme">
-                  Meme Marketing
-                </button>
-              </li>
-              <li>
-                <button className="text-muted-foreground hover:text-primary transition-colors" data-testid="footer-service-campaigns">
-                  Campaign Management
-                </button>
-              </li>
-              <li>
-                <button className="text-muted-foreground hover:text-primary transition-colors" data-testid="footer-service-paid-ads">
-                  Paid Advertising
-                </button>
-              </li>
-              <li>
-                <button className="text-muted-foreground hover:text-primary transition-colors" data-testid="footer-service-content">
-                  Content Creation
                 </button>
               </li>
             </ul>
